@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 14:00:10 by wilisson          #+#    #+#             */
-/*   Updated: 2025/12/30 18:22:22 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/02 17:10:09 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int parse_args(int ac, char **av, t_table *table) //pointer to the struct to fil
     init_args(ac, av, table);
     
     if(table->num_philos <= 0)
-        return(1);
+        return(EXIT_FAILURE);
     if(table->time_to_die <= 0)
-        return(1);
+        return(EXIT_FAILURE);
     if(table->time_to_eat <= 0)
-        return(1);
+        return(EXIT_FAILURE);
     if(table->time_to_sleep <= 0)
-        return(1);
+        return(EXIT_FAILURE);
     if(ac == 6 && table->must_eat_count <= 0)
-        return(1);
-    return(0);
+        return(EXIT_FAILURE);
+    return(EXIT_SUCCESS);
 }

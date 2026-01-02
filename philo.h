@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 14:00:39 by wilisson          #+#    #+#             */
-/*   Updated: 2025/12/31 15:05:49 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/02 16:47:49 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_philo
 	int					id;
 	int					eat_count;
 	long long			last_meal_time;
-	pthread_t			thread;
+	pthread_t			monitor_thread;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		meal_mutex;

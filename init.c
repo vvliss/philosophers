@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 14:35:42 by wilisson          #+#    #+#             */
-/*   Updated: 2025/12/31 15:15:46 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/02 17:07:11 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int init_forks(t_table *table)
             return(EXIT_FAILURE);
         i++;
     }
-    return(0);
+    return(EXIT_SUCCESS);
 }
 
 int init_philo(t_table *table)
@@ -40,8 +40,15 @@ int init_philo(t_table *table)
         return(EXIT_FAILURE);
     while(i < table->num_philos)
     {
-        philo->id = i 
+        philo = &table->philos[i];
+        philo->id = i + 1;
+        philo->eat_count = 0;
+        philo->left_fork = &table->forks[i];
+        philo->right_fork = &table->forks[(i + 1) % table->num_philos];
+        
+        i++;
     }
+    return(EXIT_SUCCESS);
 }
 
 void init_table(t_table *table)
