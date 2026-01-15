@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 14:00:39 by wilisson          #+#    #+#             */
-/*   Updated: 2026/01/15 19:37:20 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/15 20:30:20 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_table
 	long long		start_time;
 	bool			simulation_running;
 	pthread_mutex_t	sim_mutex;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	print_mutex; //makes sure only one thread prints to the terminal
 	pthread_mutex_t	*forks;
 	t_philo			*philos;	
 }                   t_table;
@@ -49,5 +49,6 @@ typedef struct s_philo
 
 long long	current_time_ms(void);
 int 		check_death(t_philo *philo);
+void 		sleep_check(long long duration_ms, t_table *table);
 
 #endif

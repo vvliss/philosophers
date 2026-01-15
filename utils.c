@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 19:56:12 by wilisson          #+#    #+#             */
-/*   Updated: 2026/01/15 20:06:43 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/15 20:30:09 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long long	current_time_ms(void)
     return (ms);
 }
 
-void smart_sleep(long long duration_ms, t_table *table)
+void sleep_check(long long duration_ms, t_table *table)
 {
     long long start = current_time_ms();
     
