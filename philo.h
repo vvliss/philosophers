@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 14:00:39 by wilisson          #+#    #+#             */
-/*   Updated: 2026/01/02 16:47:49 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:37:20 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ typedef struct s_philo
 	t_table			   	*table;
 }                      	t_philo;
 
+long long	current_time_ms(void);
+int 		check_death(t_philo *philo);
 
 #endif
