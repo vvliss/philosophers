@@ -6,7 +6,7 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 16:07:57 by wilisson          #+#    #+#             */
-/*   Updated: 2026/01/15 21:47:20 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:19:09 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ void    sleep_and_think(t_philo *philo)
     time_now = current_time_ms() - table->start_time;
     printf("%lld %d is thinking\n", time_now, philo->id);
     pthread_mutex_unlock(&table->print_mutex);
-    
+    pthread_mutex_lock(&table->sim_mutex);
+    if (table->num_philos % 2)
+    {
+        pthread_mutex_unlock(&table->sim_mutex);
+        usleep(10000);
+    }
+    else
+        pthread_mutex_unlock(&table->sim_mutex);
 }
 
 void    *odd_philo_routine(void *arg)
@@ -56,7 +63,9 @@ void    *odd_philo_routine(void *arg)
     
     philo = (t_philo *)arg;
     table = philo->table;
-
+    pthread_mutex_lock(&philo->meal_mutex);
+    philo->last_meal_time = current_time_ms();
+    pthread_mutex_unlock(&philo->meal_mutex);
     if(table->num_philos == 1)
         return NULL;
     while(1)
@@ -84,6 +93,10 @@ void    *non_odd_philo_routine(void *arg)
     
     philo = (t_philo *)arg;
     table = philo->table;
+    usleep(1000);
+    pthread_mutex_lock(&philo->meal_mutex);
+    philo->last_meal_time = current_time_ms();
+    pthread_mutex_unlock(&philo->meal_mutex);
     while(1)
     {
         pthread_mutex_lock(&table->sim_mutex);
