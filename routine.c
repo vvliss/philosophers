@@ -6,11 +6,13 @@
 /*   By: wilisson <wilisson@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 16:07:57 by wilisson          #+#    #+#             */
-/*   Updated: 2026/01/18 19:08:30 by wilisson         ###   ########.fr       */
+/*   Updated: 2026/01/18 19:58:23 by wilisson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
 
 void    eat(t_philo *philo)
 {
@@ -69,16 +71,19 @@ void    *odd_philo_routine(void *arg)
     t_table *table;
     t_philo *philo;
     int simulation;
-    int i;
     
-    i = 0;
     philo = (t_philo *)arg;
     table = philo->table;
     pthread_mutex_lock(&philo->meal_mutex);
     philo->last_meal_time = current_time_ms();
     pthread_mutex_unlock(&philo->meal_mutex);
     if(table->num_philos == 1)
+    {
+        pthread_mutex_lock(philo->left_fork);
+        printf("%lld %d has taken left fork\n", current_time_ms() - table->start_time, philo->id);
+        pthread_mutex_unlock(philo->left_fork);
         return NULL;
+    }
     while(1)
     {
         pthread_mutex_lock(&table->sim_mutex);
@@ -87,14 +92,13 @@ void    *odd_philo_routine(void *arg)
         if(!simulation)
             break;
         pthread_mutex_lock(philo->left_fork);
-        printf("%lld %d has taken left fork\n", current_time_ms() - table->start_time, table->philos[i].id);
+        printf("%lld %d has taken left fork\n", current_time_ms() - table->start_time, philo->id);
         pthread_mutex_lock(philo->right_fork);
-        printf("%lld %d has taken right fork\n", current_time_ms() - table->start_time, table->philos[i].id);
+        printf("%lld %d has taken right fork\n", current_time_ms() - table->start_time, philo->id);
         eat(philo);
         pthread_mutex_unlock(philo->left_fork);
         pthread_mutex_unlock(philo->right_fork);
         sleep_and_think(philo);
-        i++;
     }
     return NULL;
 }
@@ -104,9 +108,7 @@ void    *non_odd_philo_routine(void *arg)
     t_table *table;
     t_philo *philo;
     int simulation;
-    int i;
-    
-    i = 0;
+
     philo = (t_philo *)arg;
     table = philo->table;
     usleep(1000);
@@ -121,9 +123,9 @@ void    *non_odd_philo_routine(void *arg)
         if (!simulation)
             break;
         pthread_mutex_lock(philo->right_fork);
-        printf("%lld %d has taken right fork\n", current_time_ms() - table->start_time, table->philos[i].id);
+        printf("%lld %d has taken right fork\n", current_time_ms() - table->start_time, philo->id);
         pthread_mutex_lock(philo->left_fork);
-        printf("%lld %d has taken left fork\n", current_time_ms() - table->start_time, table->philos[i].id);
+        printf("%lld %d has taken left fork\n", current_time_ms() - table->start_time, philo->id);
         eat(philo);
         pthread_mutex_unlock(philo->right_fork);
         pthread_mutex_unlock(philo->left_fork);
